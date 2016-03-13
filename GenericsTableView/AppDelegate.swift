@@ -36,8 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let tableVC = TableViewController(items: people, style: .Plain, cellStyle: .Value1)
-        tableVC.title = "People"
+        let tableVC = TableViewController<Person> (
+            configuration: TableViewConfigulation<Person> (
+                items: people,
+                style: .Plain,
+                cellStyle: .Subtitle,
+                editable: true) { cell, item in
+                    cell.textLabel?.text = item.name
+                    cell.detailTextLabel?.text = item.city
+            })
+        tableVC.title = "Person"
         let navigationController = UINavigationController(rootViewController: tableVC)
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
